@@ -56,3 +56,6 @@ The game world should be mysterious and even dangerous. The player should be awa
 
 If the player is standing near a cliff to the East and the player takes the action "Go East" oblige them. It may be sensible (and in the confines of puzzles) to give the player a confirmation in such cases like "It looks like a long way down, are you sure? (y/n)" but in many cases if the player chooses an obviously lethal action, they should experience the consequences of their choices. They may not always be lethal or game-ending but there should be consequences for silliness. 
 
+## Author
+
+Peter Venables (pvenables at gmail dot com)
