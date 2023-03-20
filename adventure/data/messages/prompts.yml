@@ -1,0 +1,5 @@
+---
+greeting: "Welcome to the adventure! Type 'quit' to leave."
+opening: "You open your eyes and find yourself in an unfamiliar place. What will you do?"
+farewell: "Closing your eyes you choose to leave the adventure..."
+unknown_action: "You don't know how to do that."

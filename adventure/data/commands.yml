@@ -1,0 +1,51 @@
+---
+- name: move
+  desc: "You move in a direction."
+  aliases:
+    - go
+    - walk
+    - run
+    - crawl
+  action: move
+- name: look
+  desc: "You look around the room."
+  aliases:
+    - scan
+    - glance
+  action: look
+- name: quit
+  desc: "You decide to leave the game."
+  aliases:
+   - exit
+   - die
+  action: quit_game
+- name: search
+  desc: "Do a search of the area."
+  aliases:
+  action: search
+- name: pick
+  desc: "Pick an item up."
+  aliases:
+    - get 
+    - grab 
+    - snatch
+    - lift
+    - take
+  action: pick
+- name: drop
+  desc: "Drop a held item"
+  aliases:
+    - let
+  action: drop
+- name: inventory
+  desc: "List your inventory"
+  aliases:
+    - i
+    - inv 
+  action: inv
+- name: swap
+  desc: "Pass an item to another inventory space"
+  aliases:
+    - pass
+    - put
+  action: swap
