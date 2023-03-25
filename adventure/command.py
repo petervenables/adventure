@@ -19,7 +19,7 @@ class Command:
             return True
         return False
 
-    def do(self, *args, **kwargs):
+    def do_action(self, *args, **kwargs):
         """Perform the action associated with this command."""
         return self.action(*args, **kwargs)
 

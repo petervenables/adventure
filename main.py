@@ -1,6 +1,6 @@
 """Main runner of the adventure game."""
 import sys
-from colorama import init, Fore, Style
+from colorama import init
 from adventure.utils import escape_hatch
 from adventure.command import CommandNotFoundError
 from adventure.game import Game
@@ -20,7 +20,7 @@ def main():
         stmt = prompt.read_input()
         try:
             action = game.interpreter.prepare(stmt)
-            action.verb.do(action.args)
+            action.verb.do_action(action.args)
         except CommandNotFoundError:
             print(prompt.red("unknown_action"))
 

@@ -1,6 +1,6 @@
 """adventure/inventory -- what you have in your hands, pockets, and bags."""
 from dataclasses import dataclass
-from typing import List
+from typing import Dict, List
 from colorama import Fore, Style
 from adventure.item import Item
 from adventure.exceptions import ItemNotFoundError, ContainerNotFoundError, DuplicateContainerError
@@ -44,11 +44,11 @@ class Container:
         if self.can_fit(item):
             self.contents.append(item)
 
-    def remove(self, name: str) -> Item:
+    def remove(self, item: Item) -> Item:
         """Remove a named item from a container.
         
         Arguments:
-         - name(str):       The name of the item to remove.
+         - item(Item):      The item to remove.
 
         Returns:
          - (Item):          The Item so named in the container.
@@ -58,12 +58,10 @@ class Container:
         
         """
         try:
-            found = self.get(name)
-            self.contents.remove(found)
-            return found
-        except ItemNotFoundError as infe:
-            raise infe
-
+            self.contents.remove(item)
+            return item
+        except Exception as excp:
+            raise ItemNotFoundError from excp
 class Inventory:
     """Defines the things that can hold things for the player."""
     containers: List[Container] = []
@@ -122,6 +120,7 @@ class Inventory:
             raise cnfe
 
     def list_contents(self, container_name: str):
+        """Print out what's in a named container."""
         for container in self.containers:
             if container_name == container.name:
                 if len(container.contents) == 0:
@@ -130,9 +129,17 @@ class Inventory:
                     print(Fore.LIGHTBLUE_EX + f"{item}" + Style.RESET_ALL)
 
     def list_all_contents(self):
+        """Print out what's in all containers."""
         for container in self.containers:
             print(Fore.LIGHTMAGENTA_EX + f"In {container.short_desc}:" + Style.RESET_ALL)
             self.list_contents(container.name)
+
+    def list_all_containers(self) -> List:
+        """Get a list of all container names."""
+        names = []
+        for container in self.containers:
+            names.append(container.name)
+        return names
 
     def can_hold(self, name: str, item: Item) -> bool:
         """Check if the inventory can hold an item in a named container.
@@ -203,13 +210,13 @@ class Inventory:
         except ContainerNotFoundError as cnfe:
             print(Fore.LIGHTRED_EX + f" {cnfe} " + Style.RESET_ALL)
 
-    def find_item(self, item_name: str) -> List[Item]:
+    def find_item(self, item_name: str) -> List[Dict[str, Item]]:
         """Search through all containers to find a named item."""
         found = []
         for container in self.containers:
             for item in container.contents:
                 if item_name == item.name:
-                    found.append(item)
+                    found.append({"where": container.name, "what": item})
         if len(found) > 0:
             return found
         raise ItemNotFoundError(f"Item {item_name} not found in any container.")
