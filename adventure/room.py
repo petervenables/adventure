@@ -1,5 +1,5 @@
 """adventure/room -- a class to handle rooms the player will traverse."""
-from typing import List
+from typing import Dict, List
 from adventure.wall import Wall
 from adventure.door import Door
 from adventure.direction import Direction
@@ -42,30 +42,30 @@ class Room:
                 doors.append(wall)
         return doors
 
-    def in_room(self, item_name: str) -> List[Item]:
+    def in_room(self, item_name: str) -> List[Dict[str, Item]]:
         """Checks the Items in the room and returns a list of those that match the named thing.
         
         Arguments:
-         - item_name(str):      The name of the item to be found.
+         - item_name(str):          The name of the item to be found.
 
         Returns:
-         - List[Item]:              The found item if it is there.
+         - List[Dict[str, Item]]:   The location and the found item if it is there.
 
         Raises:
-         - (ItemNotFoundError): If the Item is not in the room.
+         - (ItemNotFoundError):     If the Item is not in the room.
         
         """
         items = []
         for item in self.contents:
             if item_name.lower() == item.name.lower():
-                items.append(item)
+                items.append({"where": "room", "what": item})
         for wall in self.walls:
             if item_name.lower() == wall.location.name.lower():
                 if len(wall.doors) > 0:
                     for door in wall.doors:
-                        items.append(door)
+                        items.append({"where": wall.location.name.lower(), "what": door})
                 else:
-                    items.append(wall)
+                    items.append({"where": wall.location.name.lower(), "what": wall})
         if len(items) > 0:
             return items
         raise ItemNotFoundError(f"Item {item_name} not in room.")

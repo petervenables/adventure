@@ -10,13 +10,13 @@ from adventure.constants import self_words, visibility_mod_words, mobility_mod_w
 from adventure.exceptions import ContainerNotFoundError, ItemNotFoundError
 from adventure.setup import start_room, start_rock
 from adventure.dao.doc_yaml import get_yaml_doc
+from adventure.action.item_swap import item_swap
 
 class Game:
     """This is the game class."""
     is_running: bool
     current_loc: Room
     visited: List[Room] = []
-    held: Dict[str, Item] = {'left': None, 'right': None}
     inventory: Inventory
     interpreter: Interpreter
 
@@ -57,7 +57,7 @@ class Game:
                         print(Fore.GREEN + f"You don't see {thing_name} here." + Style.RESET_ALL)
                 if len(found) > 0:
                     for item in found:
-                        print(Fore.BLUE + f"It is {item.short_desc}" + Style.RESET_ALL)
+                        print(Fore.BLUE + f"It is {item['what'].short_desc} ({item['where']})" + Style.RESET_ALL)
             else:
                 # look around the room
                 for line in wrap(self.current_loc.long_desc, width=80):
@@ -146,7 +146,7 @@ class Game:
                     for container in self.inventory.containers:
                         try:
                             found = container.get(item_name)
-                            container.remove(item_name)
+                            container.remove(found)
                             self.current_loc.contents.append(found)
                             print(Fore.LIGHTMAGENTA_EX + f"You drop {found.name} from {container.short_desc}." + Style.RESET_ALL)
                             continue
@@ -161,7 +161,10 @@ class Game:
 
     def swap(self, *args, **kwargs):
         """Swap an item from one container to another."""
-        pass
+        try:
+            item_swap(*args, self.inventory)
+        except ItemNotFoundError:
+            print("You can't seem to locate that to swap it.")
 
 def get_commands(game: Game) -> List[Command]:
     """Retrieve the command definitions from configuration."""
