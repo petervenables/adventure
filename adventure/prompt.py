@@ -1,18 +1,21 @@
 """The prompt class is for handling messages sent to the player."""
+
 from typing import Dict
 from dataclasses import dataclass, field
 import yaml
 from colorama import init, Fore, Style
 
+
 @dataclass
 class Prompt:
     """Prompt class defines messages given to the user."""
+
     msg: Dict = field(default_factory=dict)
 
     def load(self):
         """load the prompts from the YAML source."""
         init()
-        stream = open('adventure/data/messages/prompts.yml', 'r', encoding='UTF-8')
+        stream = open("adventure/data/messages/prompts.yml", "r", encoding="UTF-8")
         self.msg = yaml.safe_load(stream)
 
     def read_input(self):

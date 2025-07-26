@@ -1,10 +1,13 @@
 """adventure/door. -- Doors are the pathway to other rooms. So, kinda important."""
+
 from dataclasses import dataclass
-from adventure.item import Item
+from adventure.items.item import Item
+
 
 @dataclass
 class Door(Item):
     """Doors are marvelous things."""
+
     is_open: bool = True
     is_locked: bool = False
     is_blocked: bool = False
