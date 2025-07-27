@@ -11,6 +11,7 @@ class Door(Item):
     is_open: bool = True
     is_locked: bool = False
     is_blocked: bool = False
+    leads_to: int = None  # Room ID or index to which this door leads
 
     def lock(self):
         """Lock the door."""

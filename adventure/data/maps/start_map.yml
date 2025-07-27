@@ -1,0 +1,8 @@
+---
+name: start_map
+short_desc: "the starting point of your adventure"
+long_desc: "this is the place where your adventure begins."
+rooms:
+  - start_room
+  - sewer_control_room
+  - storage_closet

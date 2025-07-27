@@ -2,28 +2,36 @@
 
 
 class CommandError(Exception):
-    pass
+    """Base class for command-related exceptions."""
 
 
 class CommandNotFoundError(CommandError):
-    pass
+    """Raised when a command is not found in the command list."""
 
 
 class InventoryError(Exception):
-    pass
+    """Base class for inventory-related exceptions."""
+
+
+class ContainerCannotFitError(InventoryError):
+    """Raised when an item cannot fit in a container due to size constraints."""
+
+
+class ContainerFullError(InventoryError):
+    """Raised when a container is full and cannot accept more items."""
 
 
 class ItemNotFoundError(InventoryError):
-    pass
+    """Raised when an item is not found in a container or room."""
 
 
 class ContainerNotFoundError(InventoryError):
-    pass
+    """Raised when a specified container does not exist."""
 
 
 class DuplicateContainerError(InventoryError):
-    pass
+    """Raised when trying to create a container that already exists."""
 
 
 class BadStatementError(CommandError):
-    pass
+    """Raised when a statement is malformed or cannot be processed."""
