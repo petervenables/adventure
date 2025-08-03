@@ -1,21 +1,21 @@
 ---
-name: "start rooom"
+name: "a dank room"
 short_desc: "a plain, square, concrete room."
 long_desc: >
-  This room is lit by natural light through a fine grate in an upper corner. 
-  Its walls appear to be made of concrete and are very regular in length, width, 
-  and height. The floor is dirty and littered with small stones, dirt, and mossy 
+  This room is lit by natural light through a fine grate in an upper corner.
+  Its walls appear to be made of concrete and are very regular in length, width,
+  and height. The floor is dirty and littered with small stones, dirt, and mossy
   clumps.
 walls:
   - name: north
     type: concrete_wall
-    door: natural_opening
   - name: east
     type: concrete_wall
-    door: natural_opening
   - name: south
     type: concrete_wall
   - name: west
     type: concrete_wall
+    door: natural_opening
+    leads_to: 1
 contains:
-  - rock
+  - start_rock

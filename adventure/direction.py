@@ -1,5 +1,7 @@
 """adventure/direction -- handling compass movement operations."""
+
 from typing import List
+
 
 class Direction:
     name: str

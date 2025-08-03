@@ -4,6 +4,7 @@ This is not my code. I got it from Adrian Causby.
 https://towardsdatascience.com/how-to-add-an-escape-hatch-to-your-python-run-in-two-steps-7d6818f58f14
 
 """
+
 # Base Library Packages
 import _thread
 
@@ -12,6 +13,7 @@ from functools import wraps
 from pynput import keyboard
 
 from colorama import Fore, Style
+
 
 def escape_hatch(
     start_message="",
@@ -31,7 +33,11 @@ def escape_hatch(
     def decorate(func):
         def keyboard_handler(key, escape_key=keyboard_key):
             if key == escape_key:
-                print(Fore.LIGHTRED_EX + "    Program terminated by user" + Style.RESET_ALL)
+                print(
+                    Fore.LIGHTRED_EX
+                    + "    Program terminated by user"
+                    + Style.RESET_ALL
+                )
                 _thread.interrupt_main()
 
         @wraps(func)

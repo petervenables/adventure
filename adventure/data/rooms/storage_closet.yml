@@ -1,0 +1,20 @@
+---
+name: "a storage closet"
+short_desc: "a concrete-walled room lined with shelves."
+long_desc: >
+  This small room is dimly lit by a single overhead light bulb. The walls are made of
+  concrete, and the floor is bare concrete as well. Shelves line the walls, filled with
+  various supplies and equipment. The air is musty, and the faint smell of mildew lingers.
+  A heavy steel door leads to the North.
+walls:
+  - name: north
+    type: concrete_wall
+    door: steel_door
+    leads_to: 1
+  - name: east
+    type: concrete_wall
+  - name: south
+    type: concrete_wall
+  - name: west
+    type: concrete_wall
+contains:

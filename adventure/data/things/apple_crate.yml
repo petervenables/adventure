@@ -1,0 +1,9 @@
+---
+name: crate
+short_desc: "a wooden crate that once was used to hold apples"
+long_desc: "This is a small, sturdy, wooden crate, once used to transport apples. It has a few dents and scratches, but it is still intact."
+weight: 1
+bulk: 1
+classes:
+  - handheld
+  - throwable

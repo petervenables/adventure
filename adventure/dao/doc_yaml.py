@@ -1,10 +1,9 @@
-from typing import Dict
 import yaml
 
 
-def get_yaml_doc(fname: str) -> Dict:
+def get_yaml_doc(fname: str) -> dict:
     """Read in a yaml doc and return a dictionary of the contents.
-    
+
     Arguments:
         fname(str):     Name of the YAML document to read in.
 
@@ -15,9 +14,9 @@ def get_yaml_doc(fname: str) -> Dict:
         (FileNotFoundError): if the named file cannot be found.
         (EmptyFileError):    if the named file does not contain any content.
     """
-    doc: Dict = {}
+    doc: dict = {}
     try:
-        stream = open(fname, 'r', encoding='UTF-8')
+        stream = open(fname, "r", encoding="UTF-8")
         doc = yaml.safe_load(stream)
         stream.close()
         return doc

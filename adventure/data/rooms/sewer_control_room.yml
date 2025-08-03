@@ -1,0 +1,25 @@
+---
+name: "a sewer control room"
+short_desc: "a concrete-walled room with sewer control equipment."
+long_desc: >
+  This room is lit by a single utility lamp in the center of the ceiling.
+  The walls are made of concrete, and the floor is covered with a thin layer of grime
+  and water. Various control panels and levers line the walls, indicating that this
+  is a control room for the sewer system. The air is damp and carries a faint smell
+  of sewage. A large, heavy, steel door leads to the south, while a narrow passageway
+  leads to the east.
+walls:
+  - name: north
+    type: concrete_wall
+  - name: east
+    type: concrete_wall
+    door: natural_opening
+    leads_to: 0
+  - name: south
+    type: concrete_wall
+    door: steel_door
+    leads_to: 2
+  - name: west
+    type: concrete_wall
+contains:
+  - apple_crate
