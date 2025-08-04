@@ -5,7 +5,7 @@ from adventure.constants import location_mod_words
 from adventure.items.item import Item
 
 
-def item_swap(args: list, inv: Inventory):
+def item_swap(args: list, inv: Inventory) -> str:
     """Let player move item from one container to another."""
     dest: str = None
     mover: str = None
@@ -22,4 +22,5 @@ def item_swap(args: list, inv: Inventory):
                 source = found[0]["where"]
     if len(dest) > 0 and mover is not None and source is not None:
         if inv.swap_container_item(source=source, dest=dest, item_name=mover):
-            print(f"You relocate the {mover} from {source} to {dest}.")
+            return f"You relocate the {mover} from {source} to {dest}."
+    return "You can't swap those things."

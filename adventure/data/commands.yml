@@ -7,26 +7,26 @@
     - walk
     - run
     - crawl
-  action: move
+  action: adventure.commands.move.move
 - name: look
   desc: "You look around the room."
   help: "For looking around the room, use 'look' or 'look <direction>'."
   aliases:
     - scan
     - glance
-  action: look
+  action: adventure.commands.look.look
 - name: quit
   desc: "You decide to leave the game."
   help: "To exit the game, use 'quit' or 'exit'."
   aliases:
    - exit
    - die
-  action: quit_game
+  action: adventure.commands.quit.quit_game
 - name: search
   desc: "Do a search of the area."
   help: "To search the area, use 'search' or 'search <item>'."
   aliases:
-  action: search
+  action: adventure.commands.search.search
 - name: pick
   desc: "Pick an item up."
   help: "To pick up an item, use 'pick <item>'."
@@ -36,37 +36,37 @@
     - snatch
     - lift
     - take
-  action: pick
+  action: adventure.commands.pick.pick
 - name: drop
   desc: "Drop a held item"
   help: "To drop an item, use 'drop <item>'."
   aliases:
     - let
-  action: drop
+  action: adventure.commands.drop.drop
 - name: inventory
   desc: "List your inventory"
   help: "To view your inventory, use 'inventory' or 'inv'."
   aliases:
     - i
     - inv 
-  action: inv
+  action: adventure.commands.inventory.inv
 - name: swap
   desc: "Pass an item to another inventory space"
   help: "To swap items in your inventory, use 'swap <item1> <item2>'."
   aliases:
     - pass
     - put
-  action: swap
+  action: adventure.commands.swap.swap
 - name: help
   desc: "List all commands"
   help: "To see a list of actions you can perform, use 'help' or 'commands'."
   aliases:
     - commands
-  action: help
+  action: adventure.commands.help.help
 - name: throw
   desc: "Throw a held item."
   help: "To throw an item, use 'throw <item>'."
   aliases:
     - toss
     - fling
-  action: throw
+  action: adventure.commands.throw.throw
