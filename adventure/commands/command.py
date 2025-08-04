@@ -1,14 +1,20 @@
 """adventure/command -- a command interpreter class to manage actions the player will attempt."""
 
 from typing import Union
+from collections.abc import Callable
 
 
 class Command:
     """A command class for individual verbs the player can perform."""
 
     def __init__(
-        self, name: str, desc: str, help_text: str, aliases: list[str], action: callable
-    ):
+        self,
+        name: str,
+        desc: str,
+        help_text: str,
+        aliases: list[str],
+        action: Callable = None,
+    ) -> None:
         self.name = name
         self.desc = desc
         self.help_text = help_text
@@ -24,6 +30,10 @@ class Command:
             return True
         return False
 
-    def do_action(self, *args, **kwargs) -> Union[str, None]:
+    def set_action(self, action: Callable):
+        """Set the action for this command."""
+        self.action = action
+
+    def do_action(self, game, *args, **kwargs) -> Union[str, None]:
         """Perform the action associated with this command."""
-        return self.action(*args, **kwargs)
+        return self.action(game, *args, **kwargs)

@@ -16,7 +16,7 @@ prompt.load()
 )
 def main():
     """The main thing."""
-    game: Game = Game()
+    game: Game = Game(map_file="adventure/data/maps/start_map.yml")
 
     print(prompt.blue("opening"))
 
@@ -24,7 +24,7 @@ def main():
         stmt = prompt.read_input()
         try:
             action = game.interpreter.prepare(stmt)
-            print(action.verb.do_action(action.args))
+            print(action.verb.do_action(game, action.args))
         except CommandNotFoundError:
             print(prompt.red("unknown_action"))
 
