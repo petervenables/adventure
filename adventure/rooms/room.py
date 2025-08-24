@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Dict, List
 from adventure.rooms.wall import Wall
-from adventure.door import Door
+from adventure.rooms.door import Door
 from adventure.direction import Direction
 from adventure.items.item import Item
 from adventure.exceptions import ItemNotFoundError
@@ -56,11 +56,12 @@ class Room:
 
         """
         items = []
+        item_lower = item_name.lower()
         for item in self.contents:
-            if item_name.lower() == item.name.lower():
+            if item_lower == item.name.lower():
                 items.append({"where": "room", "what": item})
         for wall in self.walls:
-            if item_name.lower() == wall.location.name.lower():
+            if item_lower == wall.location.name.lower():
                 if len(wall.doors) > 0:
                     for door in wall.doors:
                         items.append(
@@ -68,6 +69,12 @@ class Room:
                         )
                 else:
                     items.append({"where": wall.location.name.lower(), "what": wall})
+            elif item_lower in [door.name for door in wall.doors]:
+                for door in wall.doors:
+                    if item_lower == door.name.lower():
+                        items.append(
+                            {"where": wall.location.name.lower(), "what": door}
+                        )
         if len(items) > 0:
             return items
         raise ItemNotFoundError(f"Item {item_name} not in room.")

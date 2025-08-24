@@ -3,7 +3,7 @@
 from adventure.rooms.room import Room
 from adventure.rooms.wall import Wall
 from adventure.direction import Direction
-from adventure.door import Door
+from adventure.rooms.door import Door
 from adventure.dao.doc_yaml import get_yaml_doc
 from adventure.items.item_loader import load_item_from_yaml
 

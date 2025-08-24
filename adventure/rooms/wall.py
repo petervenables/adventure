@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from adventure.items.item import Item
 from adventure.direction import Direction
-from adventure.door import Door
+from adventure.rooms.door import Door
 
 
 @dataclass(kw_only=True)
