@@ -15,7 +15,6 @@ class Interpreter:
         self.commands: list[Command] = self.get_commands()
         self.statements = []
 
-
     def identify_verb(self, statement: Statement) -> Command:
         """Match an input statement to an available command."""
         for token in statement.tokens:

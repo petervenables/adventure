@@ -38,4 +38,4 @@ def look(game, *args, **kwargs):
                 return f"You don't see {thing_name} here."
         if len(found) > 0:
             for item in found:
-                return f"It is {item['what'].short_desc} ({item['where']})"
+                return f"It is {item['what'].short_desc} ({item['where']}) - [{item['what'].name}]\n"
