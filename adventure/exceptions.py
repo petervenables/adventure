@@ -1,5 +1,12 @@
 """adventure/exceptions."""
 
+class EmptyFileError(Exception):
+    """For DAO Errors read from files and the file is empty."""
+
+
+class BadYamlError(Exception):
+    """For DAO Errors read from files and the YAML data is bad."""
+
 
 class CommandError(Exception):
     """Base class for command-related exceptions."""

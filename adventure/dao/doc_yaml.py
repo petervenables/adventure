@@ -1,5 +1,5 @@
 import yaml
-
+from adventure.exceptions import EmptyFileError, BadYamlError
 
 def get_yaml_doc(fname: str) -> dict:
     """Read in a yaml doc and return a dictionary of the contents.
@@ -16,9 +16,12 @@ def get_yaml_doc(fname: str) -> dict:
     """
     doc: dict = {}
     try:
-        stream = open(fname, "r", encoding="UTF-8")
-        doc = yaml.safe_load(stream)
-        stream.close()
+        with open(fname, "r", encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh)
+        if not doc:
+            raise EmptyFileError("Data file {fname} contained no data!")
+        if not isinstance(doc, dict) and not isinstance(doc, list):
+            raise BadYamlError(f"Data file {fname} did not contain valid YAML!")
         return doc
     except FileNotFoundError as fnfe:
         raise fnfe

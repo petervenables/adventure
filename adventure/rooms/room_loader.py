@@ -5,6 +5,7 @@ from adventure.direction import Direction
 from adventure.rooms.door import Door
 from adventure.dao.doc_yaml import get_yaml_doc
 from adventure.items.item_loader import load_item_from_yaml
+from adventure.defaults import DEFAULT_DATA_DIR
 
 CLASS_MAP = {}
 
@@ -37,7 +38,7 @@ def load_room_from_yaml(file_path: str) -> Room:
     room = composite_item(**args)
     for direction in data.get("walls"):
         location = Direction(str.capitalize(direction["name"]), [])
-        wall_dict = get_yaml_doc(f"adventure/data/walls/{direction['type']}.yml")
+        wall_dict = get_yaml_doc(f"{DEFAULT_DATA_DIR}/walls/{direction['type']}.yml")
         wall = Wall(
             location=location,
             name=f"{location.name} wall",
@@ -46,7 +47,7 @@ def load_room_from_yaml(file_path: str) -> Room:
             doors=[],
         )
         if direction.get("door") is not None:
-            door_dict = get_yaml_doc(f"adventure/data/doors/{direction['door']}.yml")
+            door_dict = get_yaml_doc(f"{DEFAULT_DATA_DIR}/doors/{direction['door']}.yml")
             door = Door(
                 name=door_dict.get("name"),
                 short_desc=door_dict.get("short_desc"),
@@ -57,6 +58,6 @@ def load_room_from_yaml(file_path: str) -> Room:
         room.walls.append(wall)
     if data.get("contains") is not None:
         for item_data in data.get("contains", []):
-            item = load_item_from_yaml(f"adventure/data/things/{item_data}.yml")
+            item = load_item_from_yaml(f"{DEFAULT_DATA_DIR}/things/{item_data}.yml")
             room.contents.append(item)
     return room

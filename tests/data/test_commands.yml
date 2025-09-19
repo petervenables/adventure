@@ -1,0 +1,40 @@
+---
+- name: help
+  desc: "List all commands"
+  help: "To see a list of actions you can perform, use 'help' or 'commands'."
+  aliases:
+    - commands
+  action: adventure.commands.help.help
+- name: inventory
+  desc: "List your inventory"
+  help: "To view your inventory, use 'inventory' or 'inv'."
+  aliases:
+    - i
+    - inv 
+  action: adventure.commands.inventory.inv
+- name: look
+  desc: "You look around the room."
+  help: "For looking around the room, use 'look' or 'look <direction>'."
+  aliases:
+    - scan
+    - glance
+  action: adventure.commands.look.look
+- name: move
+  desc: "You move in a direction."
+  help: "For relocating yourself in the world, use 'move <direction>'."
+  aliases:
+    - go
+    - walk
+    - run
+    - crawl
+  action: adventure.commands.move.move
+- name: pick
+  desc: "Pick an item up."
+  help: "To pick up an item, use 'pick <item>'."
+  aliases:
+    - get 
+    - grab 
+    - snatch
+    - lift
+    - take
+  action: adventure.commands.pick.pick

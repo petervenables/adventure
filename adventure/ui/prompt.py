@@ -20,7 +20,10 @@ class Prompt:
 
     def read_input(self):
         """Read text-based commands from the user."""
-        return self.ui.get_input("> ")
+        try:
+            return self.ui.get_input("> ")
+        except SystemExit as exc:
+            raise SystemExit from exc
 
     def display(self, message: str, color: str = None):
         """Report a message to the user."""
