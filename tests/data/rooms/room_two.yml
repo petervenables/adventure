@@ -1,0 +1,17 @@
+---
+name: "Room Two"
+short_desc: "a second room"
+long_desc: >
+  This room looks like a second room.
+walls:
+  - name: north
+    type: concrete_wall
+  - name: east
+    type: concrete_wall
+  - name: south
+    type: concrete_wall
+  - name: west
+    type: concrete_wall
+    door: natural_opening
+contains:
+  - start_rock

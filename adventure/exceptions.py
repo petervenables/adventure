@@ -1,5 +1,6 @@
 """adventure/exceptions."""
 
+
 class EmptyFileError(Exception):
     """For DAO Errors read from files and the file is empty."""
 

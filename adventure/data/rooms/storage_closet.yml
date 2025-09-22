@@ -10,7 +10,6 @@ walls:
   - name: north
     type: concrete_wall
     door: steel_door
-    leads_to: 1
   - name: east
     type: concrete_wall
   - name: south

@@ -1,0 +1,19 @@
+---
+name: "Test Map"
+description: "Test Map Description"
+rooms:
+  - id: 1
+    file: room_one
+    exits:
+      west: 2
+
+  - id: 2
+    file: room_two
+    exits:
+      east: 1
+      south: 3
+
+  - id: 3
+    file: room_three
+    exits:
+      north: 2

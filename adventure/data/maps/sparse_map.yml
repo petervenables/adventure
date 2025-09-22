@@ -1,0 +1,24 @@
+---
+# Sparse list format using integer room IDs and per-room exits list.
+# Room IDs must be unique integers and correspond to the `id` field on each room.
+# Exits refer to lowercase name of the direction.
+
+name: "Sparse Map Example"
+description: "Sparse map using per-room integer IDs and [n,e,s,w,u,d] exits list where defined"
+start_room: 1
+rooms:
+  - id: 1
+    file: start_room
+    exits:
+      west: 2
+
+  - id: 2
+    file: sewer_control_room
+    exits:
+      east: 1
+      south: 3
+
+  - id: 3
+    file: storage_closet
+    exits:
+      north: 2

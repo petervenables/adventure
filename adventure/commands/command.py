@@ -46,7 +46,9 @@ class Command:
                 )
             return action_func
         except ImportError as e:
-            raise ImportError(f"Error importing action for command '{self.name}': {e}") from e
+            raise ImportError(
+                f"Error importing action for command '{self.name}': {e}"
+            ) from e
 
     def do_action(self, game, *args, **kwargs) -> Union[str, None]:
         """Perform the action associated with this command."""

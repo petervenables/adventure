@@ -16,6 +16,9 @@ walls:
   - name: west
     type: concrete_wall
     door: natural_opening
-    leads_to: 1
+  - name: up
+    type: grated_concrete_ceiling
+  - name: down
+    type: dirty_concrete_floor
 contains:
   - start_rock

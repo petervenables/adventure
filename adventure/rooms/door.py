@@ -36,3 +36,7 @@ class Door(Item):
     def unblock(self):
         """Unblock the door."""
         self.is_blocked = False
+
+    def connect(self, room_id: int):
+        """Set the room this door leads to."""
+        self.leads_to = room_id

@@ -1,5 +1,9 @@
+"""adventure/dao/doc_yaml -- functions to read in YAML documents."""
+
 import yaml
+from yaml.parser import ParserError
 from adventure.exceptions import EmptyFileError, BadYamlError
+
 
 def get_yaml_doc(fname: str) -> dict:
     """Read in a yaml doc and return a dictionary of the contents.
@@ -21,7 +25,9 @@ def get_yaml_doc(fname: str) -> dict:
         if not doc:
             raise EmptyFileError("Data file {fname} contained no data!")
         if not isinstance(doc, dict) and not isinstance(doc, list):
-            raise BadYamlError(f"Data file {fname} did not contain valid YAML!")
+            raise BadYamlError(f"Data file {fname} did not contain valid YAML data!")
         return doc
+    except ParserError as pe:
+        raise BadYamlError(f"Data file {fname} could not be parsed: {pe}") from pe
     except FileNotFoundError as fnfe:
         raise fnfe

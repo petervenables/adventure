@@ -11,9 +11,9 @@ def close(game, *args, **kwargs):
     for close_tgt in args[0]:
         found = False
         room: Room = game.current_loc
-        directions = [wall.location.name.lower() for wall in room.walls]
+        directions = [wall.location.name.lower() for wall in room.get_walls()]
         if close_tgt.lower() in directions:
-            for wall in room.walls:
+            for wall in room.get_walls():
                 if close_tgt.lower() == wall.location.name.lower():
                     if len(wall.doors) == 0:
                         return f"There are no doors on the {wall.location.name} wall to close."
