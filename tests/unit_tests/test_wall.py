@@ -1,4 +1,5 @@
 """Test Adventure Room Wall functionality."""
+
 import pytest
 from adventure.rooms.wall import Wall
 from adventure.rooms.door import Door

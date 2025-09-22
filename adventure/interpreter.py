@@ -1,6 +1,5 @@
 """Interpreter class for the adventure game."""
 
-from adventure.commands.command import Command
 from adventure.commands.command_list import CommandList
 from adventure.statement import Statement
 from adventure.exceptions import BadStatementError, CommandNotFoundError

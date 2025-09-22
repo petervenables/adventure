@@ -1,13 +1,13 @@
 """Tests for the statement module."""
+
 import pytest
 from adventure.statement import Statement
 from adventure.exceptions import BadStatementError, CommandNotFoundError
-from adventure.commands.command import Command
 from adventure.commands.command_list import CommandList
-from adventure.dao.doc_yaml import get_yaml_doc
 
 TEST_DATA_DIR = "tests/data"
 TEST_COMMANDS = f"{TEST_DATA_DIR}/test_commands.yml"
+
 
 class TestStatement:
     """Test Statement class."""

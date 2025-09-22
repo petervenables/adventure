@@ -1,7 +1,5 @@
 """Unit tests for Direction enum and related functionality."""
 
-import pytest
-
 from adventure.map.direction import Direction, normalize_direction
 
 
