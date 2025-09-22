@@ -58,10 +58,7 @@ class Direction(IntEnum):
         canonical = _ALIAS_TO_CANONICAL.get(key)
         if not canonical:
             return None
-        try:
-            return cls[canonical.upper()]
-        except KeyError:
-            return None
+        return cls[canonical.upper()]
 
     @classmethod
     def aliases_for(cls, arg: Union[str, "Direction"]) -> List[str]:

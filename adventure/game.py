@@ -47,7 +47,9 @@ class Game:
                 if not stmt:
                     continue
                 action = self.interpreter.prepare(stmt)
-                result = action.verb.do_action(self, action.args, action=action.tokens[0])
+                result = action.verb.do_action(
+                    self, action.args, action=action.tokens[0]
+                )
                 if result:
                     self.prompt.display(result, "green")
             except BadStatementError:
