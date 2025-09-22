@@ -12,6 +12,13 @@
   aliases:
     - let
   action: adventure.commands.drop.drop
+- name: examine
+  desc: "Study an item."
+  help: "To study an item use 'examine <item>'."
+  aliases:
+    - study
+    - scrutinize
+  action: adventure.commands.examine.examine
 - name: help
   desc: "List all commands"
   help: "To see a list of actions you can perform, use 'help' or 'commands'."

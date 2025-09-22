@@ -1,0 +1,17 @@
+---
+name: "Room One"
+short_desc: "A number one room"
+long_desc: >
+  This room looks like it is the first room.
+walls:
+  - name: north
+    type: concrete_wall
+  - name: east
+    type: concrete_wall
+  - name: south
+    type: concrete_wall
+  - name: west
+    type: concrete_wall
+    door: natural_opening
+contains:
+  - start_rock

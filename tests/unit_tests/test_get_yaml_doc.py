@@ -2,8 +2,10 @@ import pytest
 from adventure.dao.doc_yaml import get_yaml_doc
 from adventure.exceptions import EmptyFileError, BadYamlError
 
+
 class TestGetYamlDoc:
     """Test Class for yaml doc operations."""
+
     fname: str
 
     @pytest.fixture(autouse=True)

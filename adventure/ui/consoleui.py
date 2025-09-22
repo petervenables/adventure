@@ -40,10 +40,10 @@ class ConsoleUI(BaseUI):
                 # back up and remove from read chars
                 chars.pop()
                 # Move cursor back, overwrite with space, move back again
-                print('\b \b', end='', flush=True)
-            elif ch == '\r' or ch == '\n':
+                print("\b \b", end="", flush=True)
+            elif ch == "\r" or ch == "\n":
                 print()  # Move to next line
-                return ''.join(chars).rstrip()
+                return "".join(chars).rstrip()
             else:
                 print(ch, end="", flush=True)
                 chars.append(ch)

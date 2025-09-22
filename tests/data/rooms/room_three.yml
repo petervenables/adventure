@@ -1,0 +1,17 @@
+---
+name: "Room Three"
+short_desc: "a third room"
+long_desc: >
+  This is a third room.
+walls:
+  - name: north
+    type: concrete_wall
+  - name: east
+    type: concrete_wall
+  - name: south
+    type: concrete_wall
+  - name: west
+    type: concrete_wall
+    door: natural_opening
+contains:
+  - start_rock

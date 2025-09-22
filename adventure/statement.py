@@ -13,6 +13,7 @@ class Statement:
         if not statement:
             raise BadStatementError("No statement given")
         self.stmt = statement
+        self.action: str = ""
         self.tokens: list[str] = statement.split()
         try:
             self.verb: Command = self.identify_verb(self.tokens, cmd_list)
@@ -46,17 +47,11 @@ class Statement:
         for token in tokens:
             for command in commands:
                 if token == command.name or token in command.aliases:
+                    self.action = token
                     return command
         return None
 
     def identify_args(self) -> list[str]:
         """Separate the args from the verb in the statement."""
-        self.args = self.tokens
-        if self.verb.name is not None:
-            if self.verb.name in self.args:
-                self.args.remove(self.verb.name)
-            else:
-                for alias in self.verb.aliases:
-                    if alias in self.args:
-                        self.args.remove(alias)
+        self.args = [token for token in self.tokens if token != self.action]
         return self.args

@@ -14,11 +14,9 @@ walls:
   - name: east
     type: concrete_wall
     door: natural_opening
-    leads_to: 0
   - name: south
     type: concrete_wall
     door: steel_door
-    leads_to: 2
   - name: west
     type: concrete_wall
 contains:
