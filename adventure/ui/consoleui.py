@@ -29,7 +29,7 @@ class ConsoleUI(BaseUI):
 
     def get_input(self, prompt: str = "") -> str:
         """Read text-based commands from the user, handling special keys."""
-        print("> ", end="", flush=True)
+        print(prompt, end="", flush=True)
         chars = []
         while True:
             ch = readchar.readkey()

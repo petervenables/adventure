@@ -7,6 +7,8 @@ from adventure.rooms.door import Door
 from adventure.map.direction import Direction
 from adventure.items.item import Item
 from adventure.exceptions import ItemNotFoundError
+from adventure.items.item import LightSourceItem
+from adventure.rooms.events import RoomEvent
 
 
 @dataclass(kw_only=True)
@@ -19,6 +21,22 @@ class Room:
     walls: List[Wall] = field(default_factory=list)
     contents: List[Item] = field(default_factory=list)
     inhabitants: List = field(default_factory=list)
+    switches: List[Item] = field(default_factory=list)
+    visited: bool = False
+    events: List[RoomEvent] = field(default_factory=list)
+    is_lit: bool = False  # If True, the room is always lit
+
+    def describe(self, thorough: bool = False) -> str:
+        """Return a description of the room depending on if it has been visited."""
+        if not self.room_is_lit():
+            return "The room is shrouded in darkness. You can't see anything."
+        if not self.visited or thorough:
+            return self.long_desc
+        return self.short_desc
+
+    def visit(self):
+        """Mark the room as visited."""
+        self.visited = True
 
     def add_wall(self, wall: Wall, location: Direction):
         """Add a wall to the room."""
@@ -34,8 +52,8 @@ class Room:
     def add_door(self, door: Door, location: Direction):
         """Add a door to a wall in the room."""
         for wall in self.get_walls():
-            if wall.location == location.name or wall.location in location.aliases:
-                wall.doors.append(door)
+            if wall.location.name == location.name:
+                wall.add_door(door)
 
     def show_doors(self) -> str:
         """Get the list of doors in this room."""
@@ -87,26 +105,38 @@ class Room:
          - (ItemNotFoundError):     If the Item is not in the room.
 
         """
-        items = []
+        found = []
         item_lower = item_name.lower()
         for item in self.contents:
             if item_lower == item.name.lower():
-                items.append({"where": "room", "what": item})
+                found.append({"where": "room", "what": item})
         for wall in self.get_walls():
             if item_lower == wall.location.name.lower():
-                if len(wall.doors) > 0:
-                    for door in wall.doors:
-                        items.append(
-                            {"where": wall.location.name.lower(), "what": door}
-                        )
+                if wall.has_door():
+                    found.append({"where": wall.location.name, "what": wall.get_door()})
                 else:
-                    items.append({"where": wall.location.name.lower(), "what": wall})
-            elif item_lower in [door.name for door in wall.doors]:
+                    found.append({"where": wall.location.name, "what": wall})
+            elif item_lower in [door.name.lower() for door in wall.doors]:
                 for door in wall.doors:
                     if item_lower == door.name.lower():
-                        items.append(
-                            {"where": wall.location.name.lower(), "what": door}
-                        )
-        if len(items) > 0:
-            return items
+                        found.append({"where": wall.location.name, "what": door})
+        if len(found) > 0:
+            return found
         raise ItemNotFoundError(f"Item {item_name} not in room.")
+
+    def activate(self):
+        """Activate any events associated with this room."""
+        for event in self.events:
+            if event.is_triggered(self):
+                event.fire(self)
+
+    def room_is_lit(self) -> bool:
+        """Return True if the room is lit, False if it is dark."""
+        # Some rooms are always lit
+        if self.is_lit:
+            return True
+        # A room is lit if it has at least one light source that is on
+        for item in self.contents:
+            if isinstance(item, LightSourceItem) and item.is_lit():
+                return True
+        return False

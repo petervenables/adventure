@@ -20,4 +20,6 @@ walls:
   - name: west
     type: concrete_wall
 contains:
-  - apple_crate
+  - name: apple_crate
+  - name: utility_light
+    state: on

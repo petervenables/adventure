@@ -1,5 +1,6 @@
 """Unit tests for Direction enum and related functionality."""
 
+import pytest
 from adventure.map.direction import Direction, normalize_direction
 
 
@@ -37,9 +38,12 @@ def test_aliases_for_class():
 
 def test_from_string_none_and_unknown():
     """None and unknown strings return None"""
-    assert Direction.from_string(None) is None
-    assert Direction.from_string("") is None
-    assert Direction.from_string("nope") is None
+    with pytest.raises(ValueError):
+        Direction.from_string(None)
+    with pytest.raises(ValueError):
+        Direction.from_string("")
+    with pytest.raises(KeyError):
+        Direction.from_string("nope")
 
 
 def test_normalize_direction():
@@ -48,6 +52,9 @@ def test_normalize_direction():
     assert normalize_direction("NORTH") == "NORTH"
     assert normalize_direction("southwest") == "SOUTHWEST"
     assert normalize_direction("Ceiling") == "UP"
-    assert normalize_direction("not-a-dir") is None
-    assert normalize_direction("") is None
-    assert normalize_direction(None) is None
+    with pytest.raises(KeyError):
+        normalize_direction("not-a-dir")
+    with pytest.raises(ValueError):
+        normalize_direction("")
+    with pytest.raises(ValueError):
+        normalize_direction(None)

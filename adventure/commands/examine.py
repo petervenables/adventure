@@ -1,29 +1,42 @@
 """Player look action."""
 
+from adventure.game import Game
 from adventure.rooms.room import Room
 from adventure.constants import self_words, visibility_mod_words
 from adventure.exceptions import ItemNotFoundError
+from .command_response import CommandResponse
 
 
-def examine(game, *args, **kwargs):
+def examine(game: Game, *args, **kwargs) -> CommandResponse:
     """Carefully scrutinze things held or in the room."""
     room: Room = game.current_loc if game else None
     if not room:
         raise ItemNotFoundError("Game not initialized or current location not set.")
-    if not args or not args[0]:
+    response = CommandResponse()
+    if not args or not args[0] or "room" in args[0]:
         # look around the room
-        output = ""
-        for line in room.long_desc.splitlines():
-            output += line + "\n"
-        output += "\nDoors: " + room.show_doors()
-        return output
+        response.add_message("You carefully examine the room.", "yellow")
+        response.add_message(room.describe(thorough=True), "blue")
+        if room.room_is_lit():
+            response.add_message("Exits: " + room.show_doors(), "magenta")
+        return response
     for word in args[0]:
         if word in visibility_mod_words:
             args[0].remove(word)
     if len(args[0]) > 0:
         thing_name = args[0].pop()
         if thing_name in self_words:
-            return "You've certainly looked better but you're not bad."
+            response.add_message("You examine yourself...", "yellow")
+            response.add_message(
+                "You've certainly looked better but you're not bad.", "blue"
+            )
+            # when examining self, show conditions
+            # BUT we can't do that yet.
+            # when examining self, show inventory
+            response.add_message(
+                "You are carrying: " + game.player.inventory.list_all_contents(), "blue"
+            )
+            return response
         found = []
         try:
             # Look for a describable item in the room

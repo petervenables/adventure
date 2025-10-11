@@ -4,6 +4,7 @@ import importlib
 from typing import Union
 from collections.abc import Callable
 from adventure.exceptions import CommandNotFoundError
+from .command_response import CommandResponse
 
 
 class Command:
@@ -50,6 +51,9 @@ class Command:
                 f"Error importing action for command '{self.name}': {e}"
             ) from e
 
-    def do_action(self, game, *args, **kwargs) -> Union[str, None]:
+    def do_action(self, game, *args, **kwargs) -> CommandResponse:
         """Perform the action associated with this command."""
-        return self.action(game, *args, **kwargs)
+        result = self.action(game, *args, **kwargs)
+        if not isinstance(result, CommandResponse):
+            raise TypeError("Action must return a CommandResponse object.")
+        return result

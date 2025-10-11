@@ -1,0 +1,6 @@
+---
+name: lightbulb
+short_desc: "a simple lightbulb hanging from the ceiling."
+long_desc: "a lightbuld hanging on the end of a cord from the ceiling. It has a drawstring to activate."
+classes:
+  - lightsource

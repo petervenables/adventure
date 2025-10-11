@@ -1,47 +1,47 @@
 ---
 - name: close
   desc: "Close a thing that is open."
-  help: "To close an item, use 'close <item>'."
+  help_text: "To close an item, use 'close <item>'."
   aliases:
     - shut
     - seal
   action: adventure.commands.close.close
 - name: drop
   desc: "Drop a held item"
-  help: "To drop an item, use 'drop <item>'."
+  help_text: "To drop an item, use 'drop <item>'."
   aliases:
     - let
   action: adventure.commands.drop.drop
 - name: examine
   desc: "Study an item."
-  help: "To study an item use 'examine <item>'."
+  help_text: "To study an item use 'examine <item>'."
   aliases:
     - study
     - scrutinize
   action: adventure.commands.examine.examine
 - name: help
   desc: "List all commands"
-  help: "To see a list of actions you can perform, use 'help' or 'commands'."
+  help_text: "To see a list of actions you can perform, use 'help' or 'commands'."
   aliases:
     - commands
-  action: adventure.commands.help.help
+  action: adventure.commands.help.help_cmd
 - name: inventory
   desc: "List your inventory"
-  help: "To view your inventory, use 'inventory' or 'inv'."
+  help_text: "To view your inventory, use 'inventory' or 'inv'."
   aliases:
     - i
-    - inv 
+    - inv
   action: adventure.commands.inventory.inv
 - name: look
   desc: "You look around the room."
-  help: "For looking around the room, use 'look' or 'look <direction>'."
+  help_text: "For looking around the room, use 'look' or 'look <direction>'."
   aliases:
     - scan
     - glance
   action: adventure.commands.look.look
 - name: move
   desc: "You move in a direction."
-  help: "For relocating yourself in the world, use 'move <direction>'."
+  help_text: "For relocating yourself in the world, use 'move <direction>'."
   aliases:
     - go
     - walk
@@ -50,41 +50,41 @@
   action: adventure.commands.move.move
 - name: open
   desc: "Open a thing that is closed."
-  help: "To open an item, use 'open <item>'."
+  help_text: "To open an item, use 'open <item>'."
   aliases:
   action: adventure.commands.open.open_cmd
 - name: pick
   desc: "Pick an item up."
-  help: "To pick up an item, use 'pick <item>'."
+  help_text: "To pick up an item, use 'pick <item>'."
   aliases:
-    - get 
-    - grab 
+    - get
+    - grab
     - snatch
     - lift
     - take
   action: adventure.commands.pick.pick
+- name: pull
+  desc: "Pull on something."
+  help_text: "Try 'pull <item>'."
+  aliases:
+    - tug
+    - yank
+  action: adventure.commands.pull.pull
 - name: quit
   desc: "You decide to leave the game."
-  help: "To exit the game, use 'quit' or 'exit'."
+  help_text: "To exit the game, use 'quit' or 'exit'."
   aliases:
-   - exit
-   - die
+    - exit
+    - die
   action: adventure.commands.quit.quit_game
 - name: search
   desc: "Do a search of the area."
-  help: "To search the area, use 'search' or 'search <item>'."
+  help_text: "To search the area, use 'search' or 'search <item>'."
   aliases:
   action: adventure.commands.search.search
-- name: swap
-  desc: "Pass an item to another inventory space"
-  help: "To swap items in your inventory, use 'swap <item1> <item2>'."
-  aliases:
-    - pass
-    - put
-  action: adventure.commands.swap.swap
 - name: throw
   desc: "Throw a held item."
-  help: "To throw an item, use 'throw <item>'."
+  help_text: "To throw an item, use 'throw <item>'."
   aliases:
     - toss
     - fling

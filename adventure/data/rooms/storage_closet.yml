@@ -17,3 +17,9 @@ walls:
   - name: west
     type: concrete_wall
 contains:
+  - name: bulb_light
+    state: off
+  - name: drawstring
+switches:
+  - source: drawstring
+    target: lightbulb

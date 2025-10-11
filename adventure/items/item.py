@@ -8,6 +8,7 @@ class Item:
     """Items are the nonliving things we encounter in the adventure."""
 
     name: str
+    aliases: list[str] = None
     short_desc: str
     long_desc: str
 
@@ -15,9 +16,15 @@ class Item:
         return f"{self.name} - {self.short_desc}"
 
     def __eq__(self, name: str) -> bool:
-        if name == self.name:
+        if name in [self.name, *(self.aliases or [])]:
             return True
         return False
+
+    def aka(self) -> list[str]:
+        """Return a string listing the item's aliases."""
+        if not self.aliases:
+            return [self.name]
+        return [self.name] + self.aliases
 
     def look(self) -> str:
         """Return a description of the item."""
@@ -63,3 +70,71 @@ class ThrowableItem(HandheldItem):
         # Placeholder for logic to set the item's location.
         print(f"The {self.name} is now at {location}.")
         # This would typically update the game's state to reflect the new location of the item.
+
+
+class LightSourceItem(Item):
+    """A non-handheld light source item is one that can provide light in dark areas."""
+
+    is_on: bool = False
+
+    def is_lit(self) -> bool:
+        """Return True if the light source is on, False otherwise."""
+        return self.is_on
+
+    def player_turn_on(self) -> str:
+        """Turn on the light source."""
+        if not self.is_on:
+            self.is_on = True
+            return f"You turn on the {self.name}."
+        return f"The {self.name} is already on."
+
+    def player_turn_off(self) -> str:
+        """Turn off the light source."""
+        if self.is_on:
+            self.is_on = False
+            return f"You turn off the {self.name}."
+        return f"The {self.name} is already off."
+
+    def env_turn_on(self) -> str:
+        """Environment turns on the light source."""
+        if not self.is_on:
+            self.is_on = True
+            return f"The {self.name} lights up."
+        return f"The {self.name} is already on."
+
+    def env_turn_off(self) -> str:
+        """Environment turns off the light source."""
+        if self.is_on:
+            self.is_on = False
+            return f"The {self.name} goes dark."
+        return f"The {self.name} is already off."
+
+
+class PullableItem(Item):
+    """A pullable item is one that can be pulled by the player."""
+
+    def pull(self) -> str:
+        """Pull the item."""
+        return f"You pull the {self.name}."
+
+
+class SwitchItem(Item):
+    """A switch is a control for an item that can be toggled on or off."""
+
+    target: Item = None
+
+    def set_target(self, target: Item):
+        """Set the target item that this switch controls."""
+        self.target = target
+
+    def toggle(self) -> str:
+        """Toggle the switch, affecting the target item."""
+        if self.target is None:
+            return f"You toggle the {self.name}, but nothing happens."
+        if isinstance(self.target, LightSourceItem):
+            if self.target.is_lit():
+                return self.target.player_turn_off()
+            else:
+                return self.target.player_turn_on()
+        # If it is some other kind of Item, implement other toggle logic here.
+        return f"Toggling the {self.name} has no effect (yet)."
