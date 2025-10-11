@@ -38,6 +38,8 @@ class ConsoleUI(BaseUI):
                 raise SystemExit
             if ch == readchar.key.BACKSPACE:
                 # back up and remove from read chars
+                if not chars:
+                    continue
                 chars.pop()
                 # Move cursor back, overwrite with space, move back again
                 print("\b \b", end="", flush=True)

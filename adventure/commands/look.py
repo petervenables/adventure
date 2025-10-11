@@ -13,17 +13,18 @@ def look(game: Game, *args, **kwargs) -> CommandResponse:
     if not room:
         raise ItemNotFoundError("Game not initialized or current location not set.")
     response = CommandResponse()
-    if not args or not args[0]:
-        # look around the room
-        response.add_message("You look around the room.", "yellow")
-        response.add_message(room.describe(), "blue")
-        if room.room_is_lit():
-            response.add_message(f"Exits: {room.show_doors()}", "magenta")
-        return response
-    for word in args[0]:
-        if word in visibility_mod_words:
-            args[0].remove(word)
     if len(args[0]) > 0:
+        for word in args[0]:
+            if word in visibility_mod_words:
+                args[0].remove(word)
+        if len(args[0]) == 0:
+            # look around the room
+            response.add_message("You look around the room.", "yellow")
+            response.add_message(room.describe(), "blue")
+            if room.room_is_lit():
+                response.add_message(f"Exits: {room.show_doors()}", "magenta")
+            return response
+
         thing_name = args[0].pop()
         if thing_name in self_words:
             response.add_message("You look at yourself.", "yellow")
@@ -51,3 +52,9 @@ def look(game: Game, *args, **kwargs) -> CommandResponse:
                     "green",
                 )
             return response
+    # look around the room
+    response.add_message("You look around the room.", "yellow")
+    response.add_message(room.describe(), "blue")
+    if room.room_is_lit():
+        response.add_message(f"Exits: {room.show_doors()}", "magenta")
+    return response

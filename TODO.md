@@ -8,3 +8,5 @@
 - [ ] Player can move in relative direction (left, right, forward, backward)
 - [ ] Player can change facing ("turn left (in place)")
 - [ ] "Feel/touch" action (for sensory feedback, "feel west")
+- [x] Backspace at empty prompt should not cause crash
+- [x] 'look around' should not cause a missing CommandResponse Error
