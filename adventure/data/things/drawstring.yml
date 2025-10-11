@@ -1,0 +1,9 @@
+---
+name: drawstring
+aliases:
+  - string
+short_desc: "a drawstring hanging from a lightbulb."
+long_desc: "a drawstring that hangs from a lightbulb offering control over the light source."
+classes:
+  - pullable
+  - switch

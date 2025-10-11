@@ -45,19 +45,19 @@ class Direction(IntEnum):
     DOWN = 9
 
     @classmethod
-    def from_string(cls, s: Optional[str]) -> Optional["Direction"]:
+    def from_string(cls, direction: str) -> Optional["Direction"]:
         """Return the Direction for a canonical name or alias, or None.
 
         Examples:
             Direction.from_string('n') -> Direction.NORTH
             Direction.from_string('north') -> Direction.NORTH
         """
-        if not s:
-            return None
-        key = s.strip().lower()
+        if not direction:
+            raise ValueError("direction must be a non-empty string")
+        key = direction.strip().lower()
         canonical = _ALIAS_TO_CANONICAL.get(key)
         if not canonical:
-            return None
+            raise KeyError(f"Unknown direction: {direction}")
         return cls[canonical.upper()]
 
     @classmethod

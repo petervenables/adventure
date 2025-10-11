@@ -1,0 +1,6 @@
+---
+name: utility light
+short_desc: "a utility light protected by a wire cage."
+long_desc: "this utility light is enclosed within a steel cage and diffused by screen."
+classes:
+  - lightsource

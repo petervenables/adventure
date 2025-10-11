@@ -6,6 +6,7 @@ long_desc: >
   Its walls appear to be made of concrete and are very regular in length, width,
   and height. The floor is dirty and littered with small stones, dirt, and mossy
   clumps.
+is_lit: true
 walls:
   - name: north
     type: concrete_wall
@@ -21,4 +22,4 @@ walls:
   - name: down
     type: dirty_concrete_floor
 contains:
-  - start_rock
+  - name: start_rock

@@ -1,5 +1,6 @@
 """Module to load Room objects from YAML files."""
 
+from adventure.items.item import LightSourceItem
 from adventure.rooms.room import Room
 from adventure.rooms.wall import Wall
 from adventure.map.direction import Direction
@@ -55,13 +56,33 @@ def load_room_from_yaml(file_path: str) -> Room:
             )
             door = Door(
                 name=door_dict.get("name"),
+                aliases=door_dict.get("aliases", []),
                 short_desc=door_dict.get("short_desc"),
                 long_desc=door_dict.get("long_desc"),
             )
             wall.add_door(door)
         room.add_wall(wall=wall, location=location)
     if data.get("contains") is not None:
-        for item_data in data.get("contains", []):
-            item = load_item_from_yaml(f"{DEFAULT_DATA_DIR}/things/{item_data}.yml")
+        for item_data in data.get("contains"):
+            item = load_item_from_yaml(
+                f"{DEFAULT_DATA_DIR}/things/{item_data['name']}.yml"
+            )
             room.contents.append(item)
+            if isinstance(item, LightSourceItem):
+                state = item_data.get("state", False)
+                if state:
+                    item.env_turn_on()
+                else:
+                    item.env_turn_off()
+    if data.get("switches") is not None:
+        for switch in data.get("switches", []):
+            # associate the switch with its target item in the room
+            switch_item = next(
+                (itm for itm in room.contents if itm.name == switch["source"]), None
+            )
+            switch_target = next(
+                (itm for itm in room.contents if itm.name == switch["target"]), None
+            )
+            if switch_item and switch_target:
+                switch_item.set_target(switch_target)
     return room

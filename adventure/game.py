@@ -35,6 +35,7 @@ class Game:
         self.prompt = Prompt(ui=self.ui)
         self.map = Map(base_data_dir=base_data_dir, file_name=map_file_name)
         self.current_loc = self.map.get_room(self.map.start_room)
+        self.current_loc.visit()
         self.prompt.load()
 
     def run(self):
@@ -51,7 +52,10 @@ class Game:
                     self, action.args, action=action.tokens[0]
                 )
                 if result:
-                    self.prompt.display(result, "green")
+                    for msg in result.messages:
+                        self.prompt.display(msg.message, msg.color)
+                # at the end of the loop, process any events that would be triggered
+                self.current_loc.activate()
             except BadStatementError:
                 self.prompt.show("bad_statement", "red")
             except CommandNotFoundError:

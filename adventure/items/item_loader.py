@@ -1,9 +1,21 @@
+"""Module to load items from YAML files."""
+
 import yaml
-from adventure.items.item import Item, HandheldItem, ThrowableItem
+from adventure.items.item import (
+    Item,
+    HandheldItem,
+    ThrowableItem,
+    LightSourceItem,
+    PullableItem,
+    SwitchItem,
+)
 
 CLASS_MAP = {
     "handheld": HandheldItem,
     "throwable": ThrowableItem,
+    "lightsource": LightSourceItem,
+    "pullable": PullableItem,
+    "switch": SwitchItem,
 }
 
 
