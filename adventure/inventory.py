@@ -16,6 +16,7 @@ from adventure.exceptions import (
 @dataclass
 class Container:
     """A container for holding items."""
+
     name: str
     short_desc: str
     capacity: int

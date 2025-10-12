@@ -57,9 +57,7 @@ class Game:
                     objects = [primary_obj]
                     if secondary_obj:
                         objects.append(secondary_obj)
-                result = stmt.verb.do_action(
-                    self, objects, action=stmt.tokens[0]
-                )
+                result = stmt.verb.do_action(self, objects, action=stmt.tokens[0])
                 if result:
                     for msg in result.messages:
                         self.prompt.display(msg.message, msg.color)

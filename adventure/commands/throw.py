@@ -22,13 +22,14 @@ def throw(game: Game, *args, **kwargs) -> CommandResponse:
 
         if not isinstance(thrown_item, ThrowableItem):
             return CommandResponse(
-                f"The {thrown_thing} is not something you can throw. (but can be dropped)", "red"
+                f"The {thrown_thing} is not something you can throw. (but can be dropped)",
+                "red",
             )
 
         if len(args[0]) > 0:
             target_name = args[0].pop(0)
-        #if "at" in args[0]:
-        #    target_name = args[0].pop(args[0].index("at") + 1)
+            # if "at" in args[0]:
+            #    target_name = args[0].pop(args[0].index("at") + 1)
             if target_name in SELF_WORDS:
                 return CommandResponse(
                     f"You bounce a {thrown_thing} off your own head.", "yellow"

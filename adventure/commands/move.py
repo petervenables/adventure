@@ -25,7 +25,6 @@ def move(game: Game, *args, **kwargs) -> CommandResponse:
     try:
         direction = Direction.from_string(args[0][0])
     except KeyError:
-        #return CommandResponse(f"You can't {action} that way.")
         # it wasn't a direction, maybe it's an door name?
         # find the direction from the name of the door..
         try:

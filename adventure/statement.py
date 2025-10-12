@@ -6,6 +6,7 @@ from adventure.commands.command_list import CommandList
 from adventure.exceptions import BadStatementError, CommandNotFoundError
 from adventure.constants import PREPOSITIONS, SEPARATORS
 
+
 class Statement:
     """A statement class to process the statements given by the player."""
 
@@ -61,7 +62,9 @@ class Statement:
 
         def __init__(self):
             self.children: dict[str, "Statement._TrieNode"] = {}
-            self.value: Optional[str] = None  # store candidate string when a word sequence ends here
+            self.value: Optional[str] = (
+                None  # store candidate string when a word sequence ends here
+            )
 
     def _build_trie(self, candidates: list[str]) -> "_TrieNode":
         """Build a trie of tokenized candidate names (lowercased)."""
@@ -77,7 +80,9 @@ class Statement:
             node.value = cand
         return root
 
-    def _trie_longest_match(self, root: "_TrieNode", tokens: list[str], start: int) -> Optional[Tuple[str, int]]:
+    def _trie_longest_match(
+        self, root: "_TrieNode", tokens: list[str], start: int
+    ) -> Optional[Tuple[str, int]]:
         """
         Walk the trie from tokens[start] and return the longest matching candidate:
         (candidate_string, matched_token_count) or None if no match.
@@ -98,7 +103,9 @@ class Statement:
                 best = (node.value, length)
         return best
 
-    def identify_objects(self, candidates: list[str]) -> Tuple[Optional[str], Optional[str], list[str]]:
+    def identify_objects(
+        self, candidates: list[str]
+    ) -> Tuple[Optional[str], Optional[str], list[str]]:
         """
         Identify up to two objects (primary and secondary after a preposition) using a trie.
 
@@ -162,5 +169,7 @@ class Statement:
                     for idx in range(j, j + slen):
                         removed_indices.add(idx)
 
-        remaining = [t for idx, t in enumerate(original_args) if idx not in removed_indices]
+        remaining = [
+            t for idx, t in enumerate(original_args) if idx not in removed_indices
+        ]
         return primary, secondary, remaining

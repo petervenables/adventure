@@ -16,14 +16,54 @@ LOCATION_MOD_WORDS = [
 ]
 # separators split multiword tokens (articles + common prepositions)
 SEPARATORS = {
-    "the", "a", "an",   # articles
-    "at", "to", "in", "on", "into", "onto", "from", "with", "by", "inside",
-    "outside", "through", "over", "under", "against", "upon", "of",
-    "toward", "towards", "about", "as", "for"
+    "the",
+    "a",
+    "an",  # articles
+    "at",
+    "to",
+    "in",
+    "on",
+    "into",
+    "onto",
+    "from",
+    "with",
+    "by",
+    "inside",
+    "outside",
+    "through",
+    "over",
+    "under",
+    "against",
+    "upon",
+    "of",
+    "toward",
+    "towards",
+    "about",
+    "as",
+    "for",
 }
 
 PREPOSITIONS = {
-    "at", "to", "in", "on", "into", "onto", "from", "with", "by", "inside",
-    "outside", "through", "over", "under", "against", "upon", "of",
-    "toward", "towards", "about", "as", "for"
+    "at",
+    "to",
+    "in",
+    "on",
+    "into",
+    "onto",
+    "from",
+    "with",
+    "by",
+    "inside",
+    "outside",
+    "through",
+    "over",
+    "under",
+    "against",
+    "upon",
+    "of",
+    "toward",
+    "towards",
+    "about",
+    "as",
+    "for",
 }
