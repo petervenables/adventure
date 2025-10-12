@@ -3,29 +3,39 @@
 from adventure.game import Game
 from adventure.rooms.room import Room
 from adventure.map.direction import Direction
-from adventure.constants import mobility_mod_words
+from adventure.constants import MOBILITY_MOD_WORDS
 from .command_response import CommandResponse
 
 
 def move(game: Game, *args, **kwargs) -> CommandResponse:
     """Move the player around the map."""
-    action = kwargs.get("action")
-    if len(args[0]) == 0:
-        return CommandResponse(f"You {action} about the room.", "blue")
-    for word in args[0]:
-        if word in mobility_mod_words:
-            args[0].remove(word)
-    if len(args[0]) == 0:
-        return CommandResponse(f"You {action} about the room.", "blue")
-    try:
-        direction = Direction.from_string(args[0].pop())
-    except KeyError:
-        return CommandResponse(f"You can't {action} that way.")
     room: Room = game.current_loc if game else None
     if not room:
         return CommandResponse(
             "You can't move because the current location is not set.", "red"
         )
+    action = kwargs.get("action")
+    if len(args[0]) == 0:
+        return CommandResponse(f"You {action} about the room.", "blue")
+    for word in args[0]:
+        if word in MOBILITY_MOD_WORDS:
+            args[0].remove(word)
+    if len(args[0]) == 0:
+        return CommandResponse(f"You {action} about the room.", "blue")
+    try:
+        direction = Direction.from_string(args[0][0])
+    except KeyError:
+        #return CommandResponse(f"You can't {action} that way.")
+        # it wasn't a direction, maybe it's an door name?
+        # find the direction from the name of the door..
+        try:
+            direction = game.current_loc.get_direction_of_door(args[0][0])
+        except KeyError:
+            direction = None
+
+        if direction is None:
+            return CommandResponse(f"You can't {action} that way.", "red")
+
     # Find the exit matching the direction
     exit_match = next(
         (

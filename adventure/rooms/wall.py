@@ -26,3 +26,10 @@ class Wall(Item):
         if self.has_door():
             return self.doors[0]
         return None
+
+    def get_named_door(self, name: str) -> Door | None:
+        """Get a door by name from this wall, if any."""
+        for door in self.doors:
+            if door.name.lower() == name.lower():
+                return door
+        return None

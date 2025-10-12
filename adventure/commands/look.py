@@ -2,7 +2,7 @@
 
 from adventure.game import Game
 from adventure.rooms.room import Room
-from adventure.constants import self_words, visibility_mod_words
+from adventure.constants import SELF_WORDS, VISIBILITY_MOD_WORDS
 from adventure.exceptions import ItemNotFoundError
 from .command_response import CommandResponse
 
@@ -15,18 +15,18 @@ def look(game: Game, *args, **kwargs) -> CommandResponse:
     response = CommandResponse()
     if len(args[0]) > 0:
         for word in args[0]:
-            if word in visibility_mod_words:
+            if word in VISIBILITY_MOD_WORDS:
                 args[0].remove(word)
         if len(args[0]) == 0:
             # look around the room
             response.add_message("You look around the room.", "yellow")
-            response.add_message(room.describe(), "blue")
+            response.add_message(room.describe(thorough=True), "blue")
             if room.room_is_lit():
                 response.add_message(f"Exits: {room.show_doors()}", "magenta")
             return response
 
         thing_name = args[0].pop()
-        if thing_name in self_words:
+        if thing_name in SELF_WORDS:
             response.add_message("You look at yourself.", "yellow")
             response.add_message(
                 "You've certainly looked better but you're not bad.", "blue"
@@ -54,7 +54,7 @@ def look(game: Game, *args, **kwargs) -> CommandResponse:
             return response
     # look around the room
     response.add_message("You look around the room.", "yellow")
-    response.add_message(room.describe(), "blue")
+    response.add_message(room.describe(thorough=True), "blue")
     if room.room_is_lit():
         response.add_message(f"Exits: {room.show_doors()}", "magenta")
     return response

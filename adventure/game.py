@@ -44,12 +44,21 @@ class Game:
         self.prompt.show("opening", "blue")
         while self.is_running:
             try:
-                stmt = self.prompt.read_input()
-                if not stmt:
+                input_str = self.prompt.read_input()
+                if not input_str:
                     continue
-                action = self.interpreter.prepare(stmt)
-                result = action.verb.do_action(
-                    self, action.args, action=action.tokens[0]
+                stmt = self.interpreter.prepare(input_str)
+                stuff = self.current_loc.get_everything()
+                stuff.extend(self.player.inventory.list_all_contents())
+                primary_obj, secondary_obj, _ = stmt.identify_objects(stuff)
+                if not primary_obj:
+                    objects = stmt.args
+                else:
+                    objects = [primary_obj]
+                    if secondary_obj:
+                        objects.append(secondary_obj)
+                result = stmt.verb.do_action(
+                    self, objects, action=stmt.tokens[0]
                 )
                 if result:
                     for msg in result.messages:

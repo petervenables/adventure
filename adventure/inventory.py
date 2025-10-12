@@ -1,7 +1,7 @@
 """adventure/inventory -- what you have in your hands, pockets, and bags."""
 
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 from colorama import Fore, Style
 from adventure.items.item import Item
 from adventure.exceptions import (
@@ -15,39 +15,46 @@ from adventure.exceptions import (
 
 @dataclass
 class Container:
+    """A container for holding items."""
     name: str
     short_desc: str
     capacity: int
     contents: List[Item]
 
     def get(self, name) -> Item:
+        """Retrieve a named item from the container."""
         for item in self.contents:
             if name == item.name:
                 return item
         raise ItemNotFoundError(f"Could not find an item named {name} in {self.name}.")
 
     def check_bulk(self) -> int:
+        """Check the total bulk of items in the container."""
         sum_bulk: int = 0
         for item in self.contents:
             sum_bulk += item.bulk
         return sum_bulk
 
     def is_empty(self) -> bool:
+        """Check if the container is empty."""
         if len(self.contents) == 0:
             return True
         return False
 
     def is_full(self) -> bool:
+        """Check if the container is full."""
         if self.check_bulk() >= self.capacity:
             return True
         return False
 
     def can_fit(self, item: Item) -> bool:
+        """Check if an item can fit in the container."""
         if self.check_bulk() + item.bulk <= self.capacity:
             return True
         return False
 
     def insert(self, item: Item):
+        """Insert an item into the container."""
         if self.is_full():
             raise ContainerFullError(f"{self.name} is full. Cannot insert {item.name}.")
         if not self.can_fit(item):
@@ -194,32 +201,21 @@ class Inventory:
         except ContainerNotFoundError as cnfe:
             raise cnfe
 
-    def list_contents(self, container_name: str):
+    def list_container_contents(self, container_name: str) -> list[str]:
         """Print out what's in a named container."""
-        output = ""
+        container = self.get(container_name)
+        return [item.name for item in container.contents]
+
+    def list_all_contents(self) -> list[str]:
+        """list of all item names in all containers."""
+        output = []
         for container in self.containers:
-            if container_name == container.name:
-                if container.is_empty():
-                    output += "Nothing\n"
-                else:
-                    for item in container.contents:
-                        output += f"{item}\n"
+            output.extend(self.list_container_contents(container.name))
         return output
 
-    def list_all_contents(self):
-        """Print out what's in all containers."""
-        output = ""
-        for container in self.containers:
-            output += f"In {container.short_desc}:\n"
-            output += self.list_contents(container.name)
-        return output
-
-    def list_all_containers(self) -> List:
+    def list_all_containers(self) -> list[str]:
         """Get a list of all container names."""
-        names = []
-        for container in self.containers:
-            names.append(container.name)
-        return names
+        return [container.name for container in self.containers]
 
     def can_hold(self, name: str, item: Item) -> bool:
         """Check if the inventory can hold an item in a named container.
@@ -332,3 +328,33 @@ class Inventory:
                 if item_name == item.name:
                     return True
         return False
+
+    def pull_item(self, item_name: str) -> Optional[Item]:
+        """Remove and return a named item from the inventory.
+
+        Arguments:
+         - item_name(str):   The name of the item to remove.
+        """
+        for container in self.containers:
+            for item in container.contents:
+                if item_name == item.name:
+                    container.remove(item)
+                    return item
+        return None
+
+    def pull_item_from(self, container_name: str, item_name: str) -> Item:
+        """Remove and return a named item from a named container.
+
+        Arguments:
+         - container_name(str):  The name of the container to search.
+         - item_name(str):       The name of the item to remove.
+        """
+        try:
+            container = self.get(container_name)
+            item = container.get(item_name)
+            container.remove(item)
+            return item
+        except ItemNotFoundError as infe:
+            raise infe
+        except ContainerNotFoundError as cnfe:
+            raise cnfe

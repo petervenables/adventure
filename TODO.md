@@ -1,7 +1,7 @@
 # Things that need doing still:
 
 - [ ] User actions use prompt.ui and not print
-- [ ] Items can have adjectives ("steel door", "west door")
+- [x] Items can have adjectives ("steel door", "west door" also ("heavy steel door"?))
 - [ ] Walls only have one door?
 - [ ] Examine action describes walls AND doors when found
 - [x] Rooms can be lit or unlit (or have visibility level)
@@ -10,3 +10,4 @@
 - [ ] "Feel/touch" action (for sensory feedback, "feel west")
 - [x] Backspace at empty prompt should not cause crash
 - [x] 'look around' should not cause a missing CommandResponse Error
+- [ ] Use flit for entrypoint

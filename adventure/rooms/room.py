@@ -63,7 +63,7 @@ class Room:
                 out_str += f"[ {wall.location.name} ]"
         return out_str
 
-    def get_doors(self) -> List[Door]:
+    def get_doors(self) -> list[Door]:
         """Get a list of doors in this room."""
         doors = []
         for wall in self.get_walls():
@@ -71,13 +71,28 @@ class Room:
                 doors.append(wall.doors[0])
         return doors
 
-    def get_exits(self) -> List[Wall]:
+    def get_exits(self) -> list[Wall]:
         """Get a list of walls with doors."""
         exits = []
         for wall in self.get_walls():
             if wall.has_door():
                 exits.append(wall)
         return exits
+
+    def get_direction_of_door(self, door_name: str) -> Direction | None:
+        """Get the direction of a door by its name."""
+        for wall in self.get_walls():
+            door = wall.get_named_door(door_name)
+            if door:
+                return wall.location
+        return None
+
+    def get_everything(self) -> List[str]:
+        """Get a list of all items and doors in the room."""
+        everything = [item.name.lower() for item in self.contents]
+        everything.extend([wall.name.lower() for wall in self.get_exits()])
+        everything.extend([door.name.lower() for door in self.get_doors()])
+        return everything
 
     def connect_exits(self, exit_map: Dict[str, int]):
         """Connect the doors in this room to other rooms based on the exit map.
